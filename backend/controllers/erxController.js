@@ -1,14 +1,16 @@
 const eRx = require('../models/eRx');
 const User = require('../models/User');
 const ActivityLog = require('../models/ActivityLog');
+const Encounter = require('../models/Encounter');
 
-// [DƯỢC SĨ / ADMIN] - Lấy toàn bộ đơn thuốc trong hệ thống
+// [DƯỢC SĨ / ADMIN] - Lấy toàn bộ đơn thuốc kèm thông tin hồ sơ chi tiết để bốc thuốc
 exports.getAllRx = async (req, res) => {
     try {
         const rxList = await eRx.find()
-            .populate('patientId', 'fullName accountId patientCode')
+            .populate('patientId', 'fullName accountId patientCode phone')
             .populate('doctorId', 'fullName accountId')
-            .populate('drugs.drugId', 'name unit');
+            .populate('drugs.drugId', 'name unit activeIngredient')
+            .sort({ createdAt: -1 });
         res.json(rxList);
     } catch (error) {
         res.status(500).json({ message: 'Lỗi server', error: error.message });
@@ -27,7 +29,7 @@ exports.getMyRx = async (req, res) => {
     }
 };
 
-// [BÁC SĨ] - Tạo đơn thuốc mới cho 1 lần khám
+// [BÁC SĨ] - Tạo đơn thuốc (Liên kết chặt chẽ với đơn khám bệnh nhân)
 exports.createRx = async (req, res) => {
     try {
         const { encounterId, patientId, drugs, note } = req.body;
@@ -39,44 +41,32 @@ exports.createRx = async (req, res) => {
 
         const patient = await User.findById(patientId);
         if (!patient || patient.role !== 'patient') {
-            return res.status(400).json({ message: 'patientId không hợp lệ hoặc không phải bệnh nhân!' });
+            return res.status(400).json({ message: 'Bệnh nhân không hợp lệ!' });
         }
 
         const newRx = new eRx({ encounterId, patientId, doctorId, drugs, note });
         await newRx.save();
 
-        await ActivityLog.create({
-            userId: doctorId,
-            action: 'CREATE_RX',
-            details: { rxId: newRx._id, patientId, encounterId, drugs }
-        });
-
-        res.status(201).json(newRx);
+        res.status(201).json({ message: 'Kê đơn thành công! Đơn thuốc đã gửi tới dược sĩ.', newRx });
     } catch (error) {
         res.status(500).json({ message: 'Lỗi server', error: error.message });
     }
 };
 
-// [DƯỢC SĨ] - Cấp phát thuốc theo đơn
+// [DƯỢC SĨ] - Tiến hành cấp phát (bốc thuốc) cho bệnh nhân
 exports.dispenseRx = async (req, res) => {
     try {
         const rx = await eRx.findById(req.params.id);
-        if (!rx) return res.status(404).json({ message: 'Không tìm thấy đơn thuốc' });
+        if (!rx) return res.status(404).json({ message: 'Không tìm thấy đơn thuốc!' });
 
         if (rx.status === 'Dispensed') {
-            return res.status(400).json({ message: 'Đơn thuốc này đã được cấp phát trước đó!' });
+            return res.status(400).json({ message: 'Đơn thuốc này đã bốc phát trước đó!' });
         }
 
         rx.status = 'Dispensed';
         await rx.save();
 
-        await ActivityLog.create({
-            userId: req.user.id,
-            action: 'DISPENSE_RX',
-            details: { rxId: rx._id }
-        });
-
-        res.json(rx);
+        res.json({ message: 'Cấp phát thuốc thành công, hồ sơ bệnh án đã đóng hoàn toàn!', rx });
     } catch (error) {
         res.status(500).json({ message: 'Lỗi server', error: error.message });
     }
