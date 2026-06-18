@@ -1,0 +1,6 @@
+{
+  "name": "E-Health Portal",
+  "description": "Hệ thống quản lý khám chữa bệnh, đặt lịch hẹn, bệnh án điện tử, cảnh báo tương tác thuốc và quản lý cấp phát thuốc tại quầy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
