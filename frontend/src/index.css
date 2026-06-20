@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-immersive: #050505;
+    --accent-immersive: #38bdf8;
+    --glass-immersive: rgba(255, 255, 255, 0.03);
+    --border-immersive: rgba(255, 255, 255, 0.08);
+    --text-dim-immersive: #8e9299;
+  }
+
+  body {
+    background-color: #050505;
+    color: #ffffff;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Atmospheric subtle glows */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+              radial-gradient(circle at 88% 88%, rgba(139, 92, 246, 0.08) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgba(10, 10, 12, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-glow {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.03);
+}
+
+.glow-btn {
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+.glow-btn:hover {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+}
+

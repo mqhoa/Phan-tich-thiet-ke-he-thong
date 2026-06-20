@@ -248,6 +248,39 @@
   ],
   "audits": [
     {
+      "_id": "aud_1781968613623_212",
+      "user_id": "u_admin",
+      "username": "admin",
+      "role": "ADMIN",
+      "action": "LOGIN",
+      "entity_type": "User",
+      "entity_id": "u_admin",
+      "details": "Người dùng Người Quản Trị Hệ Thống đăng nhập thành công.",
+      "timestamp": "2026-06-20T15:16:53.623Z"
+    },
+    {
+      "_id": "aud_1781968593501_924",
+      "user_id": "u_patient1",
+      "username": "patient1",
+      "role": "PATIENT",
+      "action": "LOGIN",
+      "entity_type": "User",
+      "entity_id": "u_patient1",
+      "details": "Người dùng Trần Văn Cường đăng nhập thành công.",
+      "timestamp": "2026-06-20T15:16:33.501Z"
+    },
+    {
+      "_id": "aud_1781858837884_917",
+      "user_id": "u_admin",
+      "username": "admin",
+      "role": "ADMIN",
+      "action": "LOGIN",
+      "entity_type": "User",
+      "entity_id": "u_admin",
+      "details": "Người dùng Người Quản Trị Hệ Thống đăng nhập thành công.",
+      "timestamp": "2026-06-19T08:47:17.884Z"
+    },
+    {
       "_id": "aud_1781771222533_200",
       "user_id": "u_patient1",
       "username": "patient1",

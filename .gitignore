@@ -1,8 +1,36 @@
+# ==============================
+# 1. THƯ MỤC THƯ VIỆN (BẮT BUỘC)
+# ==============================
+# Bỏ qua tất cả node_modules ở bất kỳ đâu (cả trong frontend lẫn backend)
 node_modules/
-build/
+
+# ==============================
+# 2. FILE BẢO MẬT & MÔI TRƯỜNG
+# ==============================
+# Cực kỳ quan trọng: Không bao giờ đẩy file chứa mật khẩu Database lên Git!
+.env
+.env.local
+.env.development
+.env.production
+
+# ==============================
+# 3. THƯ MỤC BUILD/SẢN PHẨM CUỐI
+# ==============================
+# Bỏ qua code đã đóng gói của Vite/React
 dist/
-coverage/
+build/
+dist-ssr/
+
+# ==============================
+# 4. FILE LOG (GHI CHÚ LỖI)
+# ==============================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==============================
+# 5. CẤU HÌNH HỆ ĐIỀU HÀNH & EDITOR
+# ==============================
 .DS_Store
-*.log
-.env*
-!.env.example
+.vscode/
+.idea/
